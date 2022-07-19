@@ -1,0 +1,44 @@
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+
+sonarcloud-check:
+ stage: sonar
+ image:
+   name: sonarsource/sonar-scanner-cli:latest
+   entrypoint: [""]
+ cache:
+   key: "${CI_JOB_NAME}"
+   paths:
+     - .sonar/cache
+ script:
+   - sonar-scanner -X
+ allow_failure: false
+ only:
+   - merge_requests
+   - branches
+   - pushes
+   - main
+
+Security-Review:
+ stage: Security_Review
+ before_script:
+   - apt update
+   - apt-get install git -y
+   - apt install python3 -y
+   - "git clone https://oauth2:${TOKEN_SECURITY_REVIEW}@gitlab.com/acct.global/acct.vtexio-projects/graphql-training.git" 
+ script:
+   - cp graphql-training/security-review/main.py .
+   - rm -rf graphql-training
+   - python3 main.py
+   - rm main.py
+ only:
+    - master
+    - main
+    - merge_requests
+    - develop
+    - security-review
+
+stages:
+  - Security_Review
+  - sonar
