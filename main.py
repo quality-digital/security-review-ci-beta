@@ -7,13 +7,13 @@ RED = "\033[1;31m"
 GREEN = "\033[0;32m"
 
 
-list_check = ["x-vtex-api-apptoken", "x-vtex-api-appkey", "vtexappkey-"]
+list_check = ["vtexappkey-"]
 value = 0
 
 print("Analising code...\n")
 
 for x in list_check:
-    req = os.popen('egrep -nr "%s" * | grep -v grep | grep -v "main.py" '%(x)).read()
+    req = os.popen('egrep -nri "%s" * | grep -v grep | grep -v "main.py" '%(x)).read()
     if x in req:
         print("\033[3;37;40mFinded in code \033[0;37;40m  \n")
         print(req)
