@@ -70,8 +70,9 @@ for x in list_check:
             r = requests.post(url, data=payload)
             print(r.text)
 
-        except Exception:
+        except Exception as e:
             print("Error send message for slack.")
+            print('Failed to upload to ftp: '+ str(e))
 
 if value > 0:
     sys.exit(1)
