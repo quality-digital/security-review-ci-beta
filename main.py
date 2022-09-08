@@ -28,50 +28,50 @@ for x in list_check:
         print(req)
         value = value + 1
 
-        repo = os.popen('git config --get remote.origin.url').read()
-        access = repo.replace('git@github.com:', 'https://github.com/')
-        url = "Forbideen"
-        payload = '''
-        {
-                "blocks": [
-                    {
-                        "type": "header",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Hardcode !",
-                            "emoji": true
-                        }
-                    },
-                    {
-                        "type": "section",
-                        "fields": [
-                            {
-                                "type": "mrkdwn",
-                                "text": "*Project:*\n%s"
-                            },
-                            {
-                                "type": "mrkdwn",
-                                "text": "*When:* %s"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "<%s|View>"
-                        }
-                    }
-                ]
-            
-        }
-        '''%(repo.replace('git@github.com:ACCT-global/', '').replace('.git', ''), access, time())
         try:
+            repo = os.popen('git config --get remote.origin.url').read()
+            access = repo.replace('git@github.com:', 'https://github.com/')
+            url = sys.argv[1]
+            payload = '''
+            {
+                    "blocks": [
+                        {
+                            "type": "header",
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Found Vulnerability",
+                                "emoji": true
+                            }
+                        },
+                        {
+                            "type": "section",
+                            "fields": [
+                                {
+                                    "type": "mrkdwn",
+                                    "text": "*Project:*\n%s"
+                                },
+                                {
+                                    "type": "mrkdwn",
+                                    "text": "*When:* %s"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "section",
+                            "text": {
+                                "type": "mrkdwn",
+                                "text": "%s"
+                            }
+                        }
+                    ]
+                
+            }
+            '''%(repo.replace('git@github.com:ACCT-global/', '').replace('.git', ''), time(), access)
             r = requests.post(url, data=payload)
             print(r.text)
 
         except Exception:
-            print("Ocorreu um erro ao enviar msg para o Slack")
+            print("Error send message for slack.")
 
 if value > 0:
     sys.exit(1)
