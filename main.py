@@ -73,6 +73,46 @@ for x in list_check:
         except Exception as e:
             print("Error send message for slack.")
             print('Failed to upload to ftp: '+ str(e))
+            repo = os.popen('git config --get remote.origin.url').read()
+            access = repo.replace('git@github.com:', 'https://github.com/')
+            url = sys.argv[1]
+            payload = '''
+            {
+                    "blocks": [
+                        {
+                            "type": "header",
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Found Vulnerability",
+                                "emoji": true
+                            }
+                        },
+                        {
+                            "type": "section",
+                            "fields": [
+                                {
+                                    "type": "mrkdwn",
+                                    "text": "*Project:*\n%s"
+                                },
+                                {
+                                    "type": "mrkdwn",
+                                    "text": "*When:* %s"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "section",
+                            "text": {
+                                "type": "mrkdwn",
+                                "text": "%s"
+                            }
+                        }
+                    ]
+                
+            }
+            '''%(repo.replace('git@github.com:ACCT-global/', '').replace('.git', ''), time(), access)
+            r = requests.post(url, data=payload)
+            print(r.text)
 
 if value > 0:
     sys.exit(1)
