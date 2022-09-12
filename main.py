@@ -9,6 +9,7 @@ list_check = ["vtexappkey-"]
 value = 0
 
 os.system("apt install python3-pip -y")
+os.system("python3-pip -m install requests")
 
 print("Analising code...\n")
 
