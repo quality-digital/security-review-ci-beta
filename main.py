@@ -8,6 +8,7 @@ GREEN = "\033[0;32m"
 list_check = ["vtexappkey-"]
 value = 0
 
+os.system("apt install python3-pip -y")
 
 print("Analising code...\n")
 
