@@ -8,6 +8,9 @@ GREEN = "\033[0;32m"
 list_check = ["vtexappkey-"]
 value = 0
 
+#os
+os.system("curl --help")
+
 print("Analising code...\n")
 
 for x in list_check:
