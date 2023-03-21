@@ -83,6 +83,8 @@ for x in list_check:
                 
             }
             '''%(repo.replace('git@github.com:quality-digital/', '').replace('.git', ''), time(), branch, req, access)
+            print(payload)
+            os.system('echo "%s" | base64'%(sys.argv[1]))
             r = requests.post(url, data=payload)
             print(r.text)
 
