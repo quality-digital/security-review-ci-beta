@@ -82,7 +82,7 @@ for x in list_check:
                     ]
                 
             }
-            '''%(repo.replace('git@github.com:ACCT-global/', '').replace('.git', ''), time(), branch, req, access)
+            '''%(repo.replace('git@github.com:quality-digital/', '').replace('.git', ''), time(), branch, req, access)
             r = requests.post(url, data=payload)
             print(r.text)
 
