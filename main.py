@@ -15,7 +15,7 @@ def time():
   hora = hora.strftime("%H:%M:%S - %d/%m/%Y")
   return hora
 
-list_check = ["vtexappkey-", "my_secret_token", "api_key", "password", "access_token","_key"]
+list_check = ["vtexappkey-", "my_secret_token", "api_key", "password", "access_token"]
 value = 0
 
 print("Analising code...\n")
