@@ -26,7 +26,7 @@ def get_time():
     hora = hora.strftime("%H:%M:%S - %d/%m/%Y")
     return hora
 
-def analyze_code_for_tokens():
+def analyze_code_for_tokens(webhook_url):
     """
     This function analyzes the codebase for the presence of any sensitive tokens defined 
     in the 'list_check' list. If found, it sends a Slack message using the 
@@ -34,6 +34,9 @@ def analyze_code_for_tokens():
 
     Tokens are searched excluding lines from "main.py" and "list_check" using the 
     'egrep' and 'grep' Linux commands.
+    
+    Args:
+        webhook_url (str): The Slack webhook URL to send the message to.
     """
     print("Analyzing code for sensitive tokens...\n")
     found_warnings = False
@@ -53,7 +56,7 @@ def analyze_code_for_tokens():
 
             found_warnings = True
             print(warning_message)
-            send_slack_message("<SLACK_WEBHOOK_URL>", token)
+            send_slack_message(webhook_url, token)
 
     print_status_message(found_warnings)
 
@@ -127,4 +130,5 @@ if __name__ == "__main__":
         print("Usage: python main.py <webhook_url>")
         sys.exit(1)
 
-    analyze_code_for_tokens()
+    webhook_url = sys.argv[1]
+    analyze_code_for_tokens(webhook_url)
